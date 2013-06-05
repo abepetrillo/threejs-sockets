@@ -1,11 +1,13 @@
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
-  , fs = require('fs')
+  , url = require("url")
+  , fs = require('fs');
 
 app.listen(4000);
 
 function handler (req, res) {
-  fs.readFile(__dirname + '/client.html',
+  var pathname = url.parse(req.url).pathname;
+  fs.readFile(__dirname + pathname,
   function (err, data) {
     if (err) {
       res.writeHead(500);
@@ -18,8 +20,8 @@ function handler (req, res) {
 }
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+  socket.emit('init', { hello: 'world' });
+  socket.on('move',function(data){
+     socket.broadcast.emit('move', data);
+  })
 });

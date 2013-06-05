@@ -12,13 +12,17 @@
       console.log(data);
       socket.emit('my other event', { my: 'data' });
     });
+    socket.on('move',function(data){
+      console.log('receiving move');
+      mesh.rotation = data;
+      animate();
+    });
   </script>
 
   <script>
 
     var camera, scene, renderer;
     var geometry, material, mesh;
-    var frameCounter = 0;
 
     init();
     animate();
@@ -48,14 +52,6 @@
         // note: three.js includes requestAnimationFrame shim
         requestAnimationFrame( animate );
 
-        mesh.rotation.x += 0.01;
-        mesh.rotation.y += 0.02;
-        frameCounter = frameCounter + 1;
-        if(frameCounter > 30){
-          frameCounter = 0;
-          console.log('sending move');
-          socket.emit('move', mesh.rotation)
-        }
         renderer.render( scene, camera );
     }
   </script>
