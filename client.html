@@ -1,0 +1,20 @@
+<html>
+<head>
+
+</head>
+<body>
+  <a href="#">Message</a>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost');
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+    document.querySelector('a').addEventListener('click', function(){
+      console.log('emitting');
+      socket.emit('my other event', { my: 'data2' });
+    });
+  </script>
+</body>
+</html>
