@@ -1,9 +1,10 @@
 {
-  "name": "three sockets",
+  "name": "three_sockets",
   "description": "Experimenting with sockets and threejs",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "3.2.6"
+    "express": "3.2.6",
+    "socket.io": "0.9.11"
   }
 }
