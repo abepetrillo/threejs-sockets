@@ -1,6 +1,5 @@
 <html>
 <head>
-
 </head>
 <body>
 <script src="http://threejs.org/build/three.min.js"></script>
@@ -51,10 +50,9 @@
         mesh.rotation.x += 0.01;
         mesh.rotation.y += 0.02;
         frameCounter = frameCounter + 1;
-        if(frameCounter > 30){
+        if(frameCounter > 10){
           frameCounter = 0;
-          console.log('sending move');
-          socket.emit('move', mesh.rotation)
+          socket.emit('move', mesh.rotation.toArray())
         }
         renderer.render( scene, camera );
     }

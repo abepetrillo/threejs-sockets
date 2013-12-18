@@ -14,7 +14,7 @@
     });
     socket.on('move',function(data){
       console.log('receiving move');
-      mesh.rotation = data;
+      mesh.rotation.fromArray(data);
       animate();
     });
   </script>
