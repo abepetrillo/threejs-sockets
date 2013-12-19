@@ -5,16 +5,16 @@
 <body>
 <script src="http://threejs.org/build/three.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/network/three-packets.js"></script>
 
   <script>
     var socket = io.connect('http://localhost');
     socket.on('init', function (data) {
-      console.log(data);
       socket.emit('my other event', { my: 'data' });
     });
     socket.on('move',function(data){
       console.log('receiving move');
-      mesh.rotation.fromArray(data);
+      packetizer.updateMeshFromPacket(mesh, data);
       animate();
     });
   </script>

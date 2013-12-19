@@ -1,7 +1,8 @@
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
   , url = require("url")
-  , fs = require('fs');
+  , fs = require('fs')
+  , packetizer = require('./network/three-packets.js');
 
 app.listen(4000);
 
@@ -11,7 +12,7 @@ function handler (req, res) {
   function (err, data) {
     if (err) {
       res.writeHead(500);
-      return res.end('Error loading client.html');
+      return res.end('Error loading file (Doesnt exist on server)');
     }
 
     res.writeHead(200);

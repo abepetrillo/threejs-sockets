@@ -4,6 +4,8 @@
 <body>
 <script src="http://threejs.org/build/three.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/network/three-packets.js"></script>
+  <script src="/ui/key_bindings.js"></script>
 
   <script>
     var socket = io.connect('http://localhost');
@@ -11,6 +13,9 @@
       console.log(data);
       socket.emit('my other event', { my: 'data' });
     });
+    var settings = {
+      frames_per_update: 5
+    }
   </script>
 
   <script>
@@ -38,6 +43,8 @@
         renderer = new THREE.CanvasRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
 
+        keyBindings.attachEvents(document.getElementsByTagName('body')[0])
+
         document.body.appendChild( renderer.domElement );
 
     }
@@ -47,12 +54,10 @@
         // note: three.js includes requestAnimationFrame shim
         requestAnimationFrame( animate );
 
-        mesh.rotation.x += 0.01;
-        mesh.rotation.y += 0.02;
         frameCounter = frameCounter + 1;
-        if(frameCounter > 10){
+        if(frameCounter > settings.frames_per_update ){
           frameCounter = 0;
-          socket.emit('move', mesh.rotation.toArray())
+          socket.emit('move', packetizer.meshToPacket(mesh))
         }
         renderer.render( scene, camera );
     }
